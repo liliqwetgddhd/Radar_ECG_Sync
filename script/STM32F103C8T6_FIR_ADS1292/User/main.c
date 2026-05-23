@@ -61,6 +61,11 @@ u32 ch2_data;		// 通道2的数据
 u8 flog;				// 触发中断标志位
 u16 point_cnt;	// 两个峰值之间的采集点数，用于计算心率
 
+u32 samples_sum = 4000;					//采样总数
+u32 point_flog_sum = 0;
+u32 point_flog = 0;
+
+
 #define Samples_Number  1    											// 采样点数
 #define Block_Size      1     										// 调用一次arm_fir_f32处理的采样点个数
 #define NumTaps        	129     									// 滤波器系数个数
@@ -165,8 +170,10 @@ int main(void)
 	CS_L;
   while (1)
   {	
+		
 		if(flog==1)
 		{
+			
 			// 通道1呼吸波数据			
 			Input_data1=(float32_t)(ch1_data^0x800000);
 			// 实现FIR滤波
@@ -204,10 +211,11 @@ int main(void)
 				p_num=0;
 			}
 			// 数据：呼吸波、心电信号、心率
-			printf("%8d,%8d,%6f\n",((u32)Output_data2),(u32)Output_data1,(BPM));
-     // printf("%8d\t",((u32)Output_data2));
-		//	printf("%8d\r\n",(u32)Output_data1);
-		//	printf("C: %6.2f",(BPM));
+			if(point_flog_sum < (samples_sum + 1) && point_flog == 1)
+			{
+				printf("%8d,%8d,%6f\n",((u32)Output_data2),(u32)Output_data1,(BPM));
+			}
+			point_flog = 1;
 			flog=0;
 			
 		}

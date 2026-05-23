@@ -29,6 +29,7 @@
 #include "usart.h"	
 #include "arm_math.h"
 
+
 /** @addtogroup STM32F10x_StdPeriph_Template
   * @{
   */
@@ -141,16 +142,27 @@ void SysTick_Handler(void)
 {
 }
 
+extern u32 samples_sum;					//采样总数
 extern u8 flog;
 extern u32 ch1_data;
 extern u32 ch2_data;
 extern u16 point_cnt;
-
+extern u32 point_flog_sum;
+extern u32 point_flog;
 void EXTI9_5_IRQHandler(void)
 {
 	u8 j;
 	u8 read_data[9];
-	sync_out_H;
+	if(point_flog == 1)
+	{
+		if(point_flog_sum < (samples_sum + 1))
+		{
+			sync_out_H;
+			point_flog_sum ++;
+		}
+		
+	}
+	
 	EXTI_ClearITPendingBit(EXTI_Line8);
 	for (j = 0; j < 9; j++)		// 连续读取9个数据
 	{
