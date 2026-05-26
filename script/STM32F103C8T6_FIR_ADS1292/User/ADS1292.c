@@ -32,7 +32,7 @@ void GPIO_ADS1292_Configuration(void)
 	// ADS1292_PWDN  -> PB10
 	// ADS1292_START -> PB11
   // ADS1292_CS  	 -> PB12
-  GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_9;
+  GPIO_InitStructure.GPIO_Pin   = GPIO_Pin_10 | GPIO_Pin_11 | GPIO_Pin_12 | GPIO_Pin_9 | GPIO_Pin_8;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;		// 高速
   GPIO_InitStructure.GPIO_Mode  = GPIO_Mode_Out_PP;		// 推挽输出
   GPIO_Init(GPIOB, &GPIO_InitStructure);							// 初始化
@@ -130,7 +130,7 @@ void ADS1292_PowerOnInit(void)
 	Delay_1us(10);
   ADS1292_Write_Reg(WREG | CONFIG2,  0XE0); // 使用内部参考电压
   Delay_1ms(10);                            // 等待内部参考电压稳定
-  ADS1292_Write_Reg(WREG | CONFIG1,  0X00); // 设置转换速率为250SPS
+  ADS1292_Write_Reg(WREG | CONFIG1,  0X03); // 设置转换速率为250SPS
   Delay_1us(10);
   ADS1292_Write_Reg(WREG | LOFF,     0XF0);	// 该寄存器配置引出检测操作
   Delay_1us(10);

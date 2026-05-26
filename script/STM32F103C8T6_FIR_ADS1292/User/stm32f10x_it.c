@@ -151,8 +151,10 @@ extern u32 point_flog_sum;
 extern u32 point_flog;
 void EXTI9_5_IRQHandler(void)
 {
+	
 	u8 j;
 	u8 read_data[9];
+
 	if(point_flog == 1)
 	{
 		if(point_flog_sum < (samples_sum + 1))
@@ -176,9 +178,10 @@ void EXTI9_5_IRQHandler(void)
 	ch2_data |= (uint32_t)read_data[6] << 16;
 	ch2_data |= (uint32_t)read_data[7] << 8;
 	ch2_data |= (uint32_t)read_data[8] << 0;
-	point_cnt++;
+
 	flog=1;
 	sync_out_L;
+
 
 }
 

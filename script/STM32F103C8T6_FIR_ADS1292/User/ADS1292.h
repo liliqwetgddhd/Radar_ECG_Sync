@@ -18,6 +18,8 @@
 #define CS_H     		GPIO_SetBits(GPIOB, GPIO_Pin_12)
 #define sync_out_L  GPIO_ResetBits(GPIOB, GPIO_Pin_9)
 #define sync_out_H  GPIO_SetBits(GPIOB, GPIO_Pin_9)
+#define sync_flog_L  GPIO_ResetBits(GPIOB, GPIO_Pin_8)
+#define sync_flog_H  GPIO_SetBits(GPIOB, GPIO_Pin_8)
 
 //-----------------------------------------------------------------
 // ADS1292√¸¡Ó∂®“Â
